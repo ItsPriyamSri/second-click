@@ -131,7 +131,7 @@ export function render(root: HTMLElement): void {
   });
   root.querySelector("[data-act=do-download]")?.addEventListener("click", () => {
     setState(cancelConfirm(getState()));
-    window.location.href = "/you-clicked-once.txt";
+    window.location.href = "you-clicked-once.txt";
   });
 
   root.querySelectorAll("[data-click]").forEach((el) => {
@@ -140,7 +140,7 @@ export function render(root: HTMLElement): void {
       const room = getState().room;
       if (room === "field") {
         if (id === REAL_FIELD_ID) setState(enterHops(getState()));
-        else window.location.href = "/this-was-the-ad.html";
+        else window.location.href = "this-was-the-ad.html";
       }
     });
   });
