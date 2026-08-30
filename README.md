@@ -4,6 +4,8 @@ A download page like the ones people already hate: walls, fake buttons, a second
 
 This is not a scanner for the rest of the web. WebMCP tools exist only on this origin.
 
+Live: https://itspriyamsri.github.io/second-click/
+
 ## Why WebMCP
 
 The lie is on the button. A chat cannot paint *this* click or write shown vs second URL on the glass. `document.modelContext.registerTool` on the top-level page is how the agent does that work in your session.
