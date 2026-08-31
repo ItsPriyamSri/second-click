@@ -919,3 +919,17 @@ ol.agent li {
   border-radius: 4px;
   cursor: pointer;
 }
+
+.mcp-status {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  margin: 0;
+  padding: 6px 12px;
+  font: 11px/1.4 ui-monospace, "JetBrains Mono", monospace;
+  color: #e2e8f0;
+  background: #0f172a;
+  border-top: 1px solid #334155;
+}

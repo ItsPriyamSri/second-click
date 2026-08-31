@@ -22,16 +22,35 @@ Build: `npm run build` then `npm run preview`.
 
 ## Test in ChatGPT
 
-1. Open the live URL in the ChatGPT desktop in-app browser (GPT-5.6 Sol or Terra; site tools on).
-2. Confirm **Site tools** lists ten tools.
-3. Prompt:
+Site tools only exist in the **ChatGPT desktop app built-in browser**. They do not exist in Chrome, Cursor, Codex CLI, or a Codex computer-use session that reports `Capability is not available: webmcp`. That message is the **client** missing WebMCP, not a missing `registerTool` call.
+
+1. ChatGPT **desktop** (latest). Model **GPT-5.6 Sol** or **GPT-5.6 Terra**. Not Luna. Not Enterprise/Edu.
+2. Settings → Browser → Permissions → **Enable site tools**.
+3. Open the built-in browser from the desktop toolbar (not Chrome).
+4. Go to `https://itspriyamsri.github.io/second-click/?v=20260831`
+5. Wait until the dark footer says `Site tools: 10 registered`, and the address-bar **Site tools** arrow lists ten tools. If the footer stays at `no document.modelContext`, stop — this client cannot see WebMCP.
+6. Prompt:
 
 ```
-We are on a dirty download page. Close every wall except the person gate. Tell me what is still blocking the core page. After I click I am a person and continue, list every download button with shown and second URLs. Highlight the real one, dim the decoys, and explain one decoy. When we reach the file that swaps URLs, reveal the second URL, show the hop chain, then request open. Do not download. I will confirm.
+Stay on this tab. Do not open Chrome. Do not look up a host capability named webmcp.
+
+First read the footer `data-webmcp-tools`. If it is not 10, report the footer text and stop.
+
+Then use only these site tools, in order:
+1. get_page_state
+2. dismiss_walls
+3. get_core_visible
+4. Stop and tell me to click "I am a person", then "Continue to Mirror Downloads". Do not click those yourself.
+5. After I continue: list_clickables, highlight_real, dim_decoys, explain_trap on one decoy id
+6. After I click the dull real download (dl-real): reveal_second_url and show_redirect_chain on dl-swap
+7. request_open
+8. Stop. I will confirm the dummy file. Do not download. Do not navigate.
+
+If site tools are missing, say so. Do not click walls by hand unless I ask.
 ```
 
-4. You complete **I am a person**, **Continue to downloads**, then later **Confirm download**.
-5. The file must read: `you clicked once.`
+7. You complete **I am a person**, **Continue to Mirror Downloads**, then later **Download File**.
+8. The file must read: `you clicked once.`
 
 Chrome flag testing is optional. Judges use ChatGPT's browser.
 
