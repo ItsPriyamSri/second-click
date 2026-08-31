@@ -9,6 +9,7 @@ import {
 } from "./reducers";
 import { getState, setState } from "./store";
 import type { WallId } from "./state";
+import { getWebmcpStatus } from "./webmcp";
 
 function closeWall(wall: WallId) {
   setState(dismissOneWall(getState(), wall));
@@ -267,6 +268,11 @@ export function render(root: HTMLElement): void {
       </div>
     `);
   }
+
+  const mcp = getWebmcpStatus();
+  parts.push(
+    `<p class="mcp-status" data-webmcp-tools="${String(mcp.count)}">${mcp.text}</p>`,
+  );
 
   root.innerHTML = parts.join("");
 
