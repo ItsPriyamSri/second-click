@@ -17,27 +17,101 @@ function closeWall(wall: WallId) {
 export function render(root: HTMLElement): void {
   const s = getState();
   const parts: string[] = [];
-  parts.push(`<div class="wrap">`);
-  parts.push(`<h1>Second Click</h1>`);
-  parts.push(
-    `<p class="sub">The download page you already know.</p>`,
-  );
+  parts.push(`<div class="site-wrapper">`);
+  
+  // Header Chrome
+  parts.push(`
+    <header class="site-header">
+      <div class="header-top">
+        <a href="#" class="brand-logo">
+          <span class="logo-badge">APK</span>
+          <span class="brand-name">FILE<span>MIRROR</span></span>
+        </a>
+        <div class="fake-search">
+          <input type="text" placeholder="Search 500,000+ APKs & drivers..." readonly value="DemoApp 1.2" />
+          <button type="button">SEARCH</button>
+        </div>
+      </div>
+      <nav class="site-nav">
+        <a href="#" class="nav-item active">HOME</a>
+        <a href="#" class="nav-item">ANDROID APKS</a>
+        <a href="#" class="nav-item">WINDOWS DRIVERS</a>
+        <a href="#" class="nav-item">MAC</a>
+        <a href="#" class="nav-item">TOP 100</a>
+      </nav>
+    </header>
+  `);
 
   if (s.room === "door") {
-    parts.push(`<div class="poster" aria-hidden="${s.walls.cookie || s.walls.notify || s.walls.signup}">`);
-    parts.push(`<p>DemoApp 1.2 for Android</p><p>Official-looking mirror. It is not.</p>`);
+    parts.push(`
+      <div class="main-layout">
+        <div class="ad-banner-top">
+          <div class="ad-banner-content">
+            <span class="ad-tag">SPONSORED</span>
+            <span class="ad-text">⚠️ Your system driver or media player may be outdated! Update now.</span>
+          </div>
+          <a href="this-was-the-ad.html" class="ad-fake-close">✕ Ad</a>
+        </div>
+        <div class="app-meta-card" aria-hidden="${s.walls.cookie || s.walls.notify || s.walls.signup}">
+          <div class="app-icon">APK</div>
+          <div style="flex:1">
+            <h2 class="app-info-title">DemoApp 1.2 for Android</h2>
+            <p class="app-info-sub">Official-looking mirror package. (Mirror Server #42)</p>
+            <div class="app-stats-grid">
+              <div class="stat-item"><span class="stat-label">File Size</span><span class="stat-val">42.1 MB</span></div>
+              <div class="stat-item"><span class="stat-label">Downloads</span><span class="stat-val">1,482,901</span></div>
+              <div class="stat-item"><span class="stat-label">Rating</span><span class="stat-val">★ 4.8 / 5</span></div>
+              <div class="stat-item"><span class="stat-label">Virus Scan</span><span class="stat-val" style="color:#16a34a">✓ Clean</span></div>
+            </div>
+    `);
+
     if (!s.walls.cookie && !s.walls.notify && !s.walls.signup) {
       if (!s.personGateDone) {
-        parts.push(`<button type="button" data-act="person">I am a person</button>`);
+        parts.push(`
+          <div class="captcha-container">
+            <div class="captcha-header">🛡️ Human Verification Required</div>
+            <div class="captcha-box">
+              <button type="button" class="captcha-btn ${s.personGateDone ? "done" : ""}" data-act="person">
+                <span class="captcha-check">${s.personGateDone ? "✓" : ""}</span>
+                <span>I am a person / not a robot</span>
+              </button>
+            </div>
+          </div>
+        `);
       } else {
-        parts.push(`<button type="button" data-act="enter-field">Continue to downloads</button>`);
+        parts.push(`
+          <button type="button" class="btn-continue-gate" data-act="enter-field">⚡ Continue to Mirror Downloads</button>
+        `);
       }
     }
-    parts.push(`</div>`);
+
+    parts.push(`
+          </div>
+        </div>
+      </div>
+    `);
   }
 
   if (s.room === "field") {
-    parts.push(`<p>Mirrors</p><div class="stack">`);
+    parts.push(`
+      <div class="main-layout">
+        <div class="ad-banner-top">
+          <div class="ad-banner-content">
+            <span class="ad-tag">ADVERTISEMENT</span>
+            <span class="ad-text">🚀 HIGH SPEED VPN - 90% OFF TODAY ONLY!</span>
+          </div>
+          <a href="this-was-the-ad.html" class="ad-fake-close">✕</a>
+        </div>
+        
+        <div class="field-grid">
+          <div class="field-main">
+            <h2 class="mirror-section-title">
+              <span>Mirror Download Server Links</span>
+              <span style="font-size:12px;color:#64748b;font-weight:600">Select a download mirror</span>
+            </h2>
+            <div class="mirror-list">
+    `);
+
     for (const c of getClickables("field")) {
       const cls = [
         c.id === s.highlightedId ? "is-real" : "",
@@ -45,23 +119,53 @@ export function render(root: HTMLElement): void {
       ]
         .filter(Boolean)
         .join(" ");
+
       parts.push(
         `<button type="button" class="${cls}" data-click="${c.id}">${c.label}</button>`,
       );
+
       if (s.explain?.id === c.id) {
         parts.push(`<p class="agent" data-speaker="agent">${s.explain.text}</p>`);
       }
     }
-    parts.push(`</div>`);
+
+    parts.push(`
+            </div>
+          </div>
+          
+          <div class="sidebar">
+            <div class="sidebar-ad-card">
+              <div class="sidebar-ad-title">SPONSORED AD</div>
+              <a href="this-was-the-ad.html" class="sidebar-ad-link">⚠️ PC Performance Alert!</a>
+              <div class="sidebar-ad-sub">34 errors found on your system. Click to clean now.</div>
+            </div>
+            <div class="sidebar-ad-card" style="background:#f0fdf4;border-color:#bbf7d0">
+              <div class="sidebar-ad-title" style="color:#166534">DOWNLOAD STATUS</div>
+              <div style="font-weight:700;font-size:12px;color:#15803d">Status: Ready</div>
+              <div style="font-size:11px;color:#64748b">Server load: 14% (Optimal)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `);
   }
 
   if (s.room === "hops") {
     const c = getClickables("hops")[0];
-    const cls = c.id === s.highlightedId ? "file is-real" : "file";
-    parts.push(`<p>Your download is ready</p>`);
-    parts.push(
-      `<button type="button" class="${cls}" data-click="${c.id}">${c.label}</button>`,
-    );
+    const cls = c.id === s.highlightedId ? "file file-swap-btn is-real" : "file file-swap-btn";
+
+    parts.push(`
+      <div class="main-layout">
+        <div class="hops-container">
+          <h2 style="font-size:20px;font-weight:800;margin-bottom:12px;color:#0f172a">Your file transfer is ready</h2>
+          <div class="virus-scan-bar">
+            <span class="scan-icon">✓</span>
+            <span>PASSED 54/54 ANTIVIRUS SCANS: Kaspersky Clean, Defender Clean, VirusTotal Passed</span>
+          </div>
+          <div style="margin-bottom:20px">
+            <button type="button" class="${cls}" data-click="${c.id}">${c.label}</button>
+    `);
+
     if (s.revealedIds.includes(SWAP_ID)) {
       parts.push(
         `<p class="urls agent" data-speaker="agent">Shown: ${c.shownUrl}\nSecond click: ${c.secondUrl}</p>`,
@@ -75,42 +179,98 @@ export function render(root: HTMLElement): void {
     if (s.explain?.id === c.id) {
       parts.push(`<p class="agent" data-speaker="agent">${s.explain.text}</p>`);
     }
+
+    parts.push(`</div>`);
+
     if (s.confirmArmed) {
-      parts.push(`<div class="bar">`);
-      parts.push(
-        `<p>The agent asked to open the file. Only you can confirm.</p>`,
-      );
-      parts.push(`<button type="button" data-act="open-confirm">Confirm download</button>`);
-      parts.push(`</div>`);
+      parts.push(`
+        <div class="bar">
+          <p>The agent asked to open the file. Only you can confirm.</p>
+          <button type="button" data-act="open-confirm">Confirm download</button>
+        </div>
+      `);
     }
+
+    parts.push(`
+        </div>
+      </div>
+    `);
   }
 
-  parts.push(`</div>`);
+  parts.push(`</div>`); // End site-wrapper
 
+  // Walls & Overlays
   if (s.walls.cookie) {
-    parts.push(
-      `<div class="wall" data-wall="cookie"><div class="sheet"><p>We use cookies to “improve your download experience.”</p><button type="button" data-wall-close="cookie">Close</button></div></div>`,
-    );
+    parts.push(`
+      <div class="wall" data-wall="cookie">
+        <div class="sheet sheet-cmp">
+          <h3 class="cmp-title">We value your privacy (CMP Consent v2.4)</h3>
+          <p class="cmp-desc">We and our 482 advertising partners store and access information on your device to personalize ads and analyze traffic. Click "Accept all" to consent.</p>
+          <div class="cmp-vendors-box">
+            <strong>Ad Vendors:</strong> AdTech Global, TrackingPlus, MediaData Inc, DataHarvest LLC, AdTargeting Network, AnalyticOps, WebInsight, MarketTracker, AdNet360...
+          </div>
+          <div class="cmp-actions">
+            <button type="button" class="btn-accept-cmp" data-wall-close="cookie">Accept all</button>
+            <button type="button" class="btn-reject-cmp" data-wall-close="cookie">Reject non-essential cookies</button>
+          </div>
+        </div>
+      </div>
+    `);
   }
+
   if (s.walls.notify) {
-    parts.push(
-      `<div class="wall" data-wall="notify"><div class="sheet"><p>Enable notifications for download status?</p><button type="button" data-wall-close="notify">Close</button></div></div>`,
-    );
+    parts.push(`
+      <div class="wall wall-notify-container" data-wall="notify">
+        <div class="sheet sheet-notify">
+          <div class="notify-header">
+            <span>🔔</span>
+            <span>itspriyamsri.github.io wants to</span>
+          </div>
+          <p class="notify-desc">Show notifications for download status and mirror updates</p>
+          <div class="notify-actions">
+            <button type="button" class="btn-notify-block" data-wall-close="notify">Block</button>
+            <button type="button" class="btn-notify-allow" data-wall-close="notify">Allow</button>
+          </div>
+        </div>
+      </div>
+    `);
   }
+
   if (s.walls.signup) {
-    parts.push(
-      `<div class="wall" data-wall="signup"><div class="sheet"><p>Create a free account to continue.</p><button type="button" data-wall-close="signup">Close</button></div></div>`,
-    );
+    parts.push(`
+      <div class="wall" data-wall="signup">
+        <div class="sheet sheet-signup">
+          <h3>Create Free Account for Premium Speeds</h3>
+          <p>Unlock 100 MB/s download speeds and skip queue times.</p>
+          <div class="signup-social-btns">
+            <a href="this-was-the-ad.html" class="btn-social"><span>🔵</span> Continue with Facebook</a>
+            <a href="this-was-the-ad.html" class="btn-social"><span>🔴</span> Continue with Google</a>
+          </div>
+          <button type="button" class="btn-skip-signup" data-wall-close="signup">Skip and use low speed mirror</button>
+        </div>
+      </div>
+    `);
   }
 
   if (s.confirmOpen) {
-    parts.push(
-      `<div class="modal-bg"><div class="sheet"><p>Start dummy file?</p><p>The agent cannot do this.</p><button type="button" data-act="do-download">Download</button> <button type="button" data-act="cancel-confirm">Cancel</button></div></div>`,
-    );
+    parts.push(`
+      <div class="modal-bg">
+        <div class="sheet modal-sheet">
+          <h3>Security Confirmation</h3>
+          <p>Start dummy file download (DemoApp.apk)?</p>
+          <p style="font-size:12px;color:#64748b;margin-bottom:16px">The agent cannot start this download. Human confirmation is required.</p>
+          <div class="modal-actions">
+            <button type="button" class="btn-confirm-dl" data-act="do-download">Download File</button>
+            <button type="button" class="btn-cancel" data-act="cancel-confirm">Cancel</button>
+          </div>
+        </div>
+      </div>
+    `);
   }
 
   root.innerHTML = parts.join("");
 
+  // Event bindings
   root.querySelectorAll("[data-wall-close]").forEach((el) => {
     el.addEventListener("click", () => {
       closeWall((el as HTMLElement).dataset.wallClose as WallId);
