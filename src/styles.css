@@ -651,53 +651,248 @@ button[data-click="dl-real"]:hover {
 .is-real, button.is-real, .file.is-real {
   outline: 4px solid #10b981 !important;
   outline-offset: 4px !important;
-  box-shadow: 0 0 25px rgba(16, 185, 129, 0.8), inset 0 0 10px rgba(16, 185, 129, 0.4) !important;
+  box-shadow: 0 0 35px rgba(16, 185, 129, 0.95), inset 0 0 15px rgba(16, 185, 129, 0.5) !important;
   opacity: 1 !important;
   filter: none !important;
-  animation: none !important;
-  border-radius: inherit !important;
+  animation: pulseRealTarget 1.8s infinite ease-in-out !important;
+  position: relative !important;
+  z-index: 20 !important;
+}
+
+@keyframes pulseRealTarget {
+  0%, 100% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.8), inset 0 0 10px rgba(16, 185, 129, 0.4); }
+  50% { box-shadow: 0 0 45px rgba(16, 185, 129, 1), inset 0 0 20px rgba(16, 185, 129, 0.7); }
 }
 
 .is-real::after {
-  content: " ★ REAL DOWNLOAD TARGET";
-  font-size: 10px;
+  content: " 🤖 WEBMCP VERIFIED TARGET";
+  font-size: 11px;
   font-weight: 800;
   background: #10b981;
   color: #ffffff;
-  padding: 2px 6px;
-  border-radius: 3px;
-  margin-left: 8px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-left: 10px;
   vertical-align: middle;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  letter-spacing: 0.5px;
 }
 
 .is-dim, button.is-dim, .file.is-dim {
-  opacity: 0.15 !important;
-  filter: grayscale(100%) opacity(0.2) !important;
-  transform: scale(0.97) !important;
-  pointer-events: auto;
-  animation: none !important;
+  opacity: 0.12 !important;
+  filter: grayscale(100%) contrast(0.4) !important;
+  transform: scale(0.96) !important;
+  pointer-events: none !important;
+  position: relative !important;
 }
 
-/* Agent Forensic Overlay */
+/* Agent Forensic Glass Panel Base */
 .agent, [data-speaker="agent"] {
-  background: #042f2e !important;
-  color: #4ade80 !important;
-  border: 2px solid #22c55e !important;
-  border-radius: 6px;
-  padding: 10px 14px;
-  font-family: 'JetBrains Mono', monospace;
+  background: linear-gradient(135deg, #042f2e 0%, #064e3b 100%) !important;
+  color: #6ee7b7 !important;
+  border: 2px solid #10b981 !important;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 13px;
-  margin-top: 8px;
-  box-shadow: 0 4px 16px rgba(4, 47, 46, 0.4);
+  margin-top: 12px;
+  box-shadow: 0 8px 24px rgba(4, 47, 46, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
   line-height: 1.6;
   position: relative;
   z-index: 50;
 }
 
-.agent::before {
-  content: "🤖 AGENT FORENSICS: ";
+/* Forensic URL Reveal Card */
+.agent-forensic-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.forensic-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.forensic-chip {
+  background: #10b981;
+  color: #022c22;
+  font-weight: 800;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.forensic-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #ecfdf5;
+  letter-spacing: 0.5px;
+}
+
+.forensic-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0,0,0,0.3);
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.forensic-label.bad {
+  color: #fca5a5;
   font-weight: 700;
+}
+
+.forensic-label.good {
   color: #86efac;
+  font-weight: 700;
+}
+
+.forensic-url.bad {
+  color: #f87171;
+  word-break: break-all;
+}
+
+.forensic-url.good {
+  color: #34d399;
+  font-weight: 700;
+  word-break: break-all;
+}
+
+/* Forensic Redirect Hop Chain Card */
+.agent-chain-card {
+  margin-top: 12px;
+}
+
+.chain-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 8px 0 0 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hop-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0,0,0,0.35);
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.hop-badge {
+  background: #059669;
+  color: #ffffff;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.hop-code {
+  color: #d1fae5;
+  flex: 1;
+}
+
+.hop-ad-tag {
+  background: #7f1d1d;
+  color: #fca5a5;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.hop-target-tag {
+  background: #15803d;
+  color: #dcfce7;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+/* Agent Explain Card */
+.agent-explain-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.explain-badge {
+  background: #0284c7;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.explain-text {
+  color: #e0f2fe;
+  font-weight: 600;
+}
+
+/* Agent Armed Safety Bar */
+.agent-armed-bar {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%) !important;
+  border: 2px dashed #2563eb !important;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15);
+}
+
+.armed-badge {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1e40af;
+  margin-bottom: 4px;
+  letter-spacing: 0.3px;
+}
+
+.armed-desc {
+  font-size: 12px;
+  color: #1e3a8a;
+  margin: 0;
+  font-weight: 500;
+}
+
+.btn-armed-open {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3) !important;
+  transition: all 0.15s ease !important;
+  white-space: nowrap;
+}
+
+.btn-armed-open:hover {
+  background: #1d4ed8 !important;
+  transform: translateY(-1px);
 }
 
 .agent.urls {

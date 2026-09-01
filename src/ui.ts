@@ -215,26 +215,69 @@ export function render(root: HTMLElement): void {
     `);
 
     if (s.revealedIds.includes(SWAP_ID)) {
-      parts.push(
-        `<p class="urls agent" data-speaker="agent">Shown: ${c.shownUrl}\nSecond click: ${c.secondUrl}</p>`,
-      );
+      parts.push(`
+        <div class="agent-forensic-card urls agent" data-speaker="agent">
+          <div class="forensic-header">
+            <span class="forensic-chip">🔍 WEBMCP FORENSICS</span>
+            <span class="forensic-title">TWO-URL TRAP REVEALED</span>
+          </div>
+          <div class="forensic-row">
+            <span class="forensic-label bad">❌ Shown URL (Human View):</span>
+            <code class="forensic-url bad">${c.shownUrl}</code>
+          </div>
+          <div class="forensic-row">
+            <span class="forensic-label good">🎯 Second Click Target (Real File):</span>
+            <code class="forensic-url good">${c.secondUrl}</code>
+          </div>
+        </div>
+      `);
     }
     if (s.chainVisibleFor === SWAP_ID) {
-      parts.push(
-        `<ol class="agent" data-speaker="agent">${c.hops.map((h) => `<li>${h}</li>`).join("")}</ol>`,
-      );
+      parts.push(`
+        <div class="agent-chain-card">
+          <div class="forensic-header">
+            <span class="forensic-chip">🔗 WEBMCP FORENSICS</span>
+            <span class="forensic-title">REDIRECT HOP CHAIN (3 STEPS)</span>
+          </div>
+          <ol class="agent chain-list" data-speaker="agent">
+            ${c.hops
+              .map(
+                (h, i) => `
+              <li class="hop-item">
+                <span class="hop-badge">${i + 1}</span>
+                <code class="hop-code">${h}</code>
+                ${
+                  i === c.hops.length - 1
+                    ? '<span class="hop-target-tag">★ DIRECT FILE TARGET</span>'
+                    : '<span class="hop-ad-tag">AD REDIRECT</span>'
+                }
+              </li>
+            `,
+              )
+              .join("")}
+          </ol>
+        </div>
+      `);
     }
     if (s.explain?.id === c.id) {
-      parts.push(`<p class="agent" data-speaker="agent">${s.explain.text}</p>`);
+      parts.push(`
+        <div class="agent-explain-card agent" data-speaker="agent">
+          <span class="explain-badge">💡 WEBMCP INSIGHT</span>
+          <span class="explain-text">${s.explain.text}</span>
+        </div>
+      `);
     }
 
     parts.push(`</div>`);
 
     if (s.confirmArmed) {
       parts.push(`
-        <div class="bar">
-          <p>The agent asked to open the file. Only you can confirm.</p>
-          <button type="button" data-act="open-confirm">Confirm download</button>
+        <div class="bar agent-armed-bar">
+          <div class="armed-left">
+            <div class="armed-badge">🛡️ HUMAN CONFIRMATION GATE ARMED</div>
+            <p class="armed-desc">The WebMCP agent verified the direct file. Only you can authorize download execution.</p>
+          </div>
+          <button type="button" data-act="open-confirm" class="btn-armed-open">Confirm Download</button>
         </div>
       `);
     }
