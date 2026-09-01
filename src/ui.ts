@@ -24,21 +24,21 @@ export function render(root: HTMLElement): void {
   parts.push(`
     <header class="site-header">
       <div class="header-top">
-        <a href="#" class="brand-logo">
+        <a href="this-was-the-ad.html" class="brand-logo">
           <span class="logo-badge">APK</span>
           <span class="brand-name">FILE<span>MIRROR</span></span>
         </a>
         <div class="fake-search">
-          <input type="text" placeholder="Search 500,000+ APKs & drivers..." readonly value="DemoApp 1.2" />
-          <button type="button">SEARCH</button>
+          <input type="text" placeholder="Search 500,000+ APKs & drivers..." readonly value="DemoApp 1.2" title="Read-only search query" />
+          <button type="button" onclick="window.location.href='this-was-the-ad.html'">SEARCH</button>
         </div>
       </div>
       <nav class="site-nav">
-        <a href="#" class="nav-item active">HOME</a>
-        <a href="#" class="nav-item">ANDROID APKS</a>
-        <a href="#" class="nav-item">WINDOWS DRIVERS</a>
-        <a href="#" class="nav-item">MAC</a>
-        <a href="#" class="nav-item">TOP 100</a>
+        <a href="this-was-the-ad.html" class="nav-item active">HOME</a>
+        <a href="this-was-the-ad.html" class="nav-item">ANDROID APKS</a>
+        <a href="this-was-the-ad.html" class="nav-item">WINDOWS DRIVERS</a>
+        <a href="this-was-the-ad.html" class="nav-item">MAC</a>
+        <a href="this-was-the-ad.html" class="nav-item">TOP 100</a>
       </nav>
     </header>
   `);
@@ -128,7 +128,9 @@ export function render(root: HTMLElement): void {
         .join(" ");
 
       let buttonContent = c.label;
-      if (c.id === "dl-decoy-1") {
+      if (c.id === REAL_FIELD_ID) {
+        buttonContent = `<div class="real-btn-inner"><span class="real-btn-title">Download DemoApp.apk (42.1 MB)</span><span class="real-btn-sub">HTTP Direct Mirror • Standard Speed (Free)</span></div>`;
+      } else if (c.id === "dl-decoy-1") {
         buttonContent = `<span class="anim-down-arrow">⬇</span> ${c.label}`;
       } else if (c.id === "dl-decoy-3") {
         buttonContent = `⚡ ${c.label}`;
