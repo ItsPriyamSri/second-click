@@ -29,6 +29,7 @@ body {
   font-size: 14px;
   line-height: 1.5;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Base Layout Container */
@@ -40,6 +41,7 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
   border-left: 1px solid #cbd5e1;
   border-right: 1px solid #cbd5e1;
+  position: relative;
 }
 
 /* Header Chrome */
@@ -75,6 +77,12 @@ body {
   border-radius: 3px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+  0%, 100% { background: #ef4444; }
+  50% { background: #dc2626; box-shadow: 0 0 10px rgba(239, 68, 68, 0.8); }
 }
 
 .brand-name {
@@ -142,6 +150,30 @@ body {
 /* Main Content Wrapper */
 .main-layout {
   padding: 20px;
+}
+
+/* Moving Marquee Ticker Banner */
+.ad-marquee-ticker {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  border-radius: 4px;
+}
+
+.marquee-content {
+  display: inline-block;
+  animation: marquee 16s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
 /* Banner Ads Chrome */
@@ -374,7 +406,31 @@ body {
   gap: 12px;
 }
 
-/* Decoys & Real Buttons Styling */
+/* Animated Down Arrow Icons */
+.anim-down-arrow {
+  display: inline-block;
+  animation: bounceArrow 1.2s ease-in-out infinite;
+  margin-right: 6px;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+.anim-sparkle {
+  display: inline-block;
+  animation: rotateSparkle 2s linear infinite;
+  margin-left: 6px;
+}
+
+@keyframes rotateSparkle {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Decoys & Real Buttons Styling - Distinct Shapes & Animations */
 button[data-click], .file[data-click] {
   font: inherit;
   cursor: pointer;
@@ -382,42 +438,42 @@ button[data-click], .file[data-click] {
   position: relative;
 }
 
-/* Giant Decoy 1 */
+/* Giant Decoy 1 - Pill Shape */
 button[data-click="dl-decoy-1"] {
   background: linear-gradient(180deg, #22c55e 0%, #15803d 100%);
   color: #ffffff;
-  border: 2px solid #166534;
-  padding: 16px 24px;
+  border: 3px solid #166534;
+  padding: 16px 28px;
   font-size: 20px;
   font-weight: 900;
-  border-radius: 6px;
+  border-radius: 9999px; /* PILL SHAPE */
   text-transform: uppercase;
   letter-spacing: 0.5px;
   width: 100%;
-  box-shadow: 0 4px 10px rgba(34, 197, 94, 0.4);
+  box-shadow: 0 6px 18px rgba(34, 197, 94, 0.45);
   text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-  animation: pulse-ad 2s infinite ease-in-out;
+  animation: pulse-ad 1.8s infinite ease-in-out;
 }
 
 @keyframes pulse-ad {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.015); box-shadow: 0 6px 16px rgba(34, 197, 94, 0.6); }
+  0%, 100% { transform: scale(1); box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4); }
+  50% { transform: scale(1.02); box-shadow: 0 8px 22px rgba(34, 197, 94, 0.7); }
 }
 
-/* Decoy 2 */
+/* Decoy 2 - Squircle Shape */
 button[data-click="dl-decoy-2"] {
-  background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
   color: #ffffff;
   border: 2px solid #1e40af;
   padding: 14px 20px;
   font-size: 16px;
   font-weight: 800;
-  border-radius: 4px;
+  border-radius: 18px; /* SQUIRCLE SHAPE */
   width: 100%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
 }
 
-/* Decoy 3 */
+/* Decoy 3 - Sharp Rectangular Glossy Button */
 button[data-click="dl-decoy-3"] {
   background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%);
   color: #ffffff;
@@ -425,35 +481,39 @@ button[data-click="dl-decoy-3"] {
   padding: 12px 18px;
   font-size: 15px;
   font-weight: 800;
-  border-radius: 4px;
+  border-radius: 0px; /* SHARP RECTANGLE */
   width: 100%;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.3), 0 4px 10px rgba(239, 68, 68, 0.35);
 }
 
-/* Decoy 4 */
+/* Decoy 4 - Rounded Capsule Badge */
 button[data-click="dl-decoy-4"] {
   background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
   color: #ffffff;
   border: 2px solid #b45309;
-  padding: 12px 18px;
+  padding: 12px 24px;
   font-size: 14px;
   font-weight: 800;
-  border-radius: 4px;
+  border-radius: 30px; /* CAPSULE */
   width: 100%;
+  box-shadow: 0 4px 8px rgba(245, 158, 11, 0.4);
 }
 
-/* Decoy 5 */
+/* Decoy 5 - Cyan Glassmorphism Box */
 button[data-click="dl-decoy-5"] {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: #f0f9ff;
+  color: #0369a1;
   border: 2px solid #0284c7;
   padding: 12px 16px;
   font-size: 14px;
   font-weight: 800;
-  border-radius: 4px;
+  border-radius: 8px; /* ROUNDED BOX */
   width: 100%;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.15);
 }
 
-/* Decoy 6 */
+/* Decoy 6 - Blinking Yellow Warning Tag */
 button[data-click="dl-decoy-6"] {
   background: #fef08a;
   color: #854d0e;
@@ -463,9 +523,15 @@ button[data-click="dl-decoy-6"] {
   font-weight: 800;
   border-radius: 4px;
   width: 100%;
+  animation: flashTag 1.2s infinite alternate;
 }
 
-/* Decoy 7 */
+@keyframes flashTag {
+  0% { background: #fef08a; border-color: #ca8a04; }
+  100% { background: #fef9c3; border-color: #eab308; box-shadow: 0 0 10px rgba(234, 179, 8, 0.5); }
+}
+
+/* Decoy 7 - Purple Rounded Gradient Card */
 button[data-click="dl-decoy-7"] {
   background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%);
   color: #ffffff;
@@ -473,11 +539,11 @@ button[data-click="dl-decoy-7"] {
   padding: 12px 16px;
   font-size: 14px;
   font-weight: 800;
-  border-radius: 4px;
+  border-radius: 12px; /* SOFT CARD */
   width: 100%;
 }
 
-/* Real Field Button (Weak & Dull text link look) */
+/* Real Field Button (Dull & Weak plain rectangular text link) */
 button[data-click="dl-real"] {
   background: #f8fafc;
   color: #475569;
@@ -485,10 +551,11 @@ button[data-click="dl-real"] {
   padding: 8px 14px;
   font-size: 12px;
   font-weight: 600;
-  border-radius: 3px;
+  border-radius: 2px; /* Dull rectangle */
   width: auto;
   text-align: left;
   display: inline-block;
+  box-shadow: none;
 }
 
 button[data-click="dl-real"]:hover {
@@ -528,14 +595,36 @@ button[data-click="dl-real"]:hover {
   color: #8c8c8c;
 }
 
+/* Animated Progress Bar */
+.animated-progress-bar {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 86%;
+  background: linear-gradient(90deg, #22c55e, #10b981);
+  animation: progressPulse 2s infinite ease-in-out;
+}
+
+@keyframes progressPulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
 /* Agent Paint States */
 .is-real, button.is-real, .file.is-real {
-  outline: 3px solid #10b981 !important;
-  outline-offset: 3px !important;
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.7) !important;
+  outline: 4px solid #10b981 !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.8), inset 0 0 10px rgba(16, 185, 129, 0.4) !important;
   opacity: 1 !important;
   filter: none !important;
   animation: none !important;
+  border-radius: inherit !important;
 }
 
 .is-real::after {
@@ -551,30 +640,33 @@ button[data-click="dl-real"]:hover {
 }
 
 .is-dim, button.is-dim, .file.is-dim {
-  opacity: 0.18 !important;
-  filter: grayscale(100%) blur(0.5px) !important;
+  opacity: 0.15 !important;
+  filter: grayscale(100%) opacity(0.2) !important;
   transform: scale(0.97) !important;
   pointer-events: auto;
+  animation: none !important;
 }
 
 /* Agent Forensic Overlay */
 .agent, [data-speaker="agent"] {
-  background: #064e3b;
-  color: #a7f3d0;
-  border: 1px solid #10b981;
+  background: #042f2e !important;
+  color: #4ade80 !important;
+  border: 2px solid #22c55e !important;
   border-radius: 6px;
   padding: 10px 14px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
+  font-size: 13px;
   margin-top: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(4, 47, 46, 0.4);
   line-height: 1.6;
+  position: relative;
+  z-index: 50;
 }
 
 .agent::before {
   content: "🤖 AGENT FORENSICS: ";
   font-weight: 700;
-  color: #34d399;
+  color: #86efac;
 }
 
 .agent.urls {
@@ -672,32 +764,40 @@ ol.agent li {
   background: #1d4ed8;
 }
 
-/* Walls (Modals) */
-.wall {
+/* Walls (Modals & Bottom Popups) */
+
+/* Cookie CMP Wall - POPPING FROM THE BOTTOM */
+.wall[data-wall="cookie"] {
   position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(3px);
+  inset: auto 0 0 0; /* BOTTOM SHEET */
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   z-index: 100;
-  padding: 20px;
+  padding: 0;
+  animation: slideUpCookie 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.sheet {
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  padding: 24px;
-  width: min(480px, 100%);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-  position: relative;
+@keyframes slideUpCookie {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
 }
 
-/* Cookie CMP Wall Specifics */
 .sheet-cmp {
-  width: min(560px, 100%);
+  width: 100%;
+  max-width: 720px;
+  border-radius: 12px 12px 0 0;
+  border-bottom: none;
+  background: #ffffff;
+  padding: 24px;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.25);
 }
 
 .cmp-title {
@@ -714,7 +814,7 @@ ol.agent li {
 }
 
 .cmp-vendors-box {
-  max-height: 120px;
+  max-height: 100px;
   overflow-y: auto;
   border: 1px solid #e2e8f0;
   background: #f8fafc;
@@ -727,42 +827,58 @@ ol.agent li {
 
 .cmp-actions {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-direction: flex-row;
+  gap: 12px;
 }
 
 .btn-accept-cmp {
   background: #16a34a;
   color: #ffffff;
   border: none;
-  padding: 12px;
+  padding: 12px 24px;
   font-weight: 800;
   font-size: 14px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  flex: 1;
 }
 
 .btn-reject-cmp {
   background: transparent;
   color: #64748b;
   border: 1px solid #cbd5e1;
-  padding: 8px;
+  padding: 12px;
   font-weight: 600;
   font-size: 12px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-/* Notify Prompt Wall Specifics */
-.wall-notify-container {
+/* Notify Prompt Wall - DROPPING FROM TOP */
+.wall[data-wall="notify"] {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
   align-items: flex-start;
-  padding-top: 40px;
+  justify-content: flex-start;
+  z-index: 110;
+  padding: 20px;
 }
 
 .sheet-notify {
-  width: 360px;
+  width: 380px;
   border: 1px solid #94a3b8;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  animation: slideDownNotify 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDownNotify {
+  from { transform: translateY(-40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .notify-header {
@@ -808,9 +924,35 @@ ol.agent li {
   cursor: pointer;
 }
 
-/* Signup Wall Specifics */
+/* Signup Wall - SLOW FADE & FULL SCREEN OVERLAY */
+.wall[data-wall="signup"] {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 120;
+  padding: 20px;
+  animation: slowFadeSignup 0.6s ease-out;
+}
+
+@keyframes slowFadeSignup {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.sheet-signup {
+  width: min(460px, 90vw);
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+}
+
 .sheet-signup h3 {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
   margin-bottom: 6px;
   color: #0f172a;
@@ -819,13 +961,13 @@ ol.agent li {
 .sheet-signup p {
   font-size: 13px;
   color: #64748b;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .signup-social-btns {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 16px;
 }
 
@@ -834,9 +976,9 @@ ol.agent li {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #cbd5e1;
-  border-radius: 4px;
+  border-radius: 6px;
   text-decoration: none;
   color: #334155;
   font-weight: 700;
@@ -854,8 +996,41 @@ ol.agent li {
   font-weight: 600;
   text-align: center;
   cursor: pointer;
-  margin-top: 8px;
+  margin-top: 12px;
   text-decoration: underline;
+}
+
+/* Floating Annoying Support Badge */
+.floating-support-badge {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 30px;
+  padding: 8px 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 80;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+  animation: floatBounce 3s infinite ease-in-out;
+}
+
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  display: inline-block;
 }
 
 /* Confirmation Dialog Modal */
@@ -919,6 +1094,7 @@ ol.agent li {
   border-radius: 4px;
   cursor: pointer;
 }
+
 
 .mcp-status {
   position: fixed;

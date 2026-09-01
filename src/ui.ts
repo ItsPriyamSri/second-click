@@ -46,6 +46,9 @@ export function render(root: HTMLElement): void {
   if (s.room === "door") {
     parts.push(`
       <div class="main-layout">
+        <div class="ad-marquee-ticker">
+          <span class="marquee-content">⚠️ SYSTEM NOTICE: 3 Driver Updates Available! High Speed Download Server #4 online • 1,482,901 Downloads Completed • Verify CAPTCHA to unlock mirrors...</span>
+        </div>
         <div class="ad-banner-top">
           <div class="ad-banner-content">
             <span class="ad-tag">SPONSORED</span>
@@ -96,6 +99,9 @@ export function render(root: HTMLElement): void {
   if (s.room === "field") {
     parts.push(`
       <div class="main-layout">
+        <div class="ad-marquee-ticker">
+          <span class="marquee-content">🔥 FLASH DEAL: Unlimited High Speed Download Mirror Pass - 90% OFF! • Download starting in 5s...</span>
+        </div>
         <div class="ad-banner-top">
           <div class="ad-banner-content">
             <span class="ad-tag">ADVERTISEMENT</span>
@@ -121,8 +127,13 @@ export function render(root: HTMLElement): void {
         .filter(Boolean)
         .join(" ");
 
+      let buttonContent = c.label;
+      if (c.id !== REAL_FIELD_ID) {
+        buttonContent = `<span class="anim-down-arrow">⬇</span> ${c.label} <span class="anim-sparkle">✨</span>`;
+      }
+
       parts.push(
-        `<button type="button" class="${cls}" data-click="${c.id}">${c.label}</button>`,
+        `<button type="button" class="${cls}" data-click="${c.id}">${buttonContent}</button>`,
       );
 
       if (s.explain?.id === c.id) {
@@ -142,8 +153,10 @@ export function render(root: HTMLElement): void {
             </div>
             <div class="sidebar-ad-card" style="background:#f0fdf4;border-color:#bbf7d0">
               <div class="sidebar-ad-title" style="color:#166534">DOWNLOAD STATUS</div>
-              <div style="font-weight:700;font-size:12px;color:#15803d">Status: Ready</div>
-              <div style="font-size:11px;color:#64748b">Server load: 14% (Optimal)</div>
+              <div style="font-weight:700;font-size:12px;color:#15803d">Server Load: 86%</div>
+              <div class="animated-progress-bar">
+                <div class="progress-fill"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -164,7 +177,7 @@ export function render(root: HTMLElement): void {
             <span>PASSED 54/54 ANTIVIRUS SCANS: Kaspersky Clean, Defender Clean, VirusTotal Passed</span>
           </div>
           <div style="margin-bottom:20px">
-            <button type="button" class="${cls}" data-click="${c.id}">${c.label}</button>
+            <button type="button" class="${cls}" data-click="${c.id}"><span class="anim-down-arrow">⬇</span> ${c.label}</button>
     `);
 
     if (s.revealedIds.includes(SWAP_ID)) {
@@ -199,6 +212,14 @@ export function render(root: HTMLElement): void {
   }
 
   parts.push(`</div>`); // End site-wrapper
+
+  // Floating Annoying Support Badge
+  parts.push(`
+    <div class="floating-support-badge">
+      <span class="badge-dot"></span>
+      <span>Live Mirror Support Online</span>
+    </div>
+  `);
 
   // Walls & Overlays
   if (s.walls.cookie) {
