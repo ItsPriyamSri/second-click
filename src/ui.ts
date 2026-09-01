@@ -1,5 +1,6 @@
 import { getClickables, REAL_FIELD_ID, SWAP_ID } from "./catalog";
 import {
+  armRequestOpen,
   cancelConfirm,
   completePersonGate,
   dismissOneWall,
@@ -12,6 +13,7 @@ import type { WallId } from "./state";
 import { getWebmcpStatus } from "./webmcp";
 
 let isVerifyingPerson = false;
+let swapClickCount = 0;
 
 function closeWall(wall: WallId) {
   setState(dismissOneWall(getState(), wall));
@@ -203,7 +205,13 @@ export function render(root: HTMLElement): void {
             <span>PASSED 54/54 ANTIVIRUS SCANS: Kaspersky Clean, Defender Clean, VirusTotal Passed</span>
           </div>
           <div style="margin-bottom:20px">
-            <button type="button" class="${cls}" data-click="${c.id}">${c.label}</button>
+            <button type="button" class="${cls}" data-click="${c.id}">
+              <span class="swap-btn-inner">
+                <span class="swap-icon">📥</span>
+                <span class="swap-label">DemoApp.apk</span>
+                <span class="swap-meta">(42.1 MB • Mirror Server #1)</span>
+              </span>
+            </button>
     `);
 
     if (s.revealedIds.includes(SWAP_ID)) {
@@ -357,6 +365,21 @@ export function render(root: HTMLElement): void {
       if (room === "field") {
         if (id === REAL_FIELD_ID) setState(enterHops(getState()));
         else window.location.href = "this-was-the-ad.html";
+      } else if (room === "hops") {
+        if (id === SWAP_ID) {
+          el.classList.add("active-press");
+          setTimeout(() => el.classList.remove("active-press"), 180);
+
+          if (!getState().confirmArmed && swapClickCount === 0) {
+            // Click 1: Ad hop redirection!
+            swapClickCount = 1;
+            window.location.href = "this-was-the-ad.html";
+          } else {
+            // Click 2 (or when armed): Security confirmation modal opens!
+            setState(armRequestOpen(getState()));
+            setState(openConfirm(getState()));
+          }
+        }
       }
     });
   });

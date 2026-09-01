@@ -752,13 +752,48 @@ ol.agent li {
   background: linear-gradient(180deg, #10b981 0%, #047857 100%);
   color: #ffffff;
   border: 2px solid #065f46;
-  padding: 14px 24px;
-  font-size: 16px;
+  padding: 16px 28px;
+  font-size: 17px;
   font-weight: 800;
-  border-radius: 6px;
+  border-radius: 8px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.1s ease, background 0.2s ease;
+  user-select: none;
+}
+
+.file-swap-btn:hover {
+  background: linear-gradient(180deg, #34d399 0%, #059669 100%);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.45);
+}
+
+.file-swap-btn:active, .file-swap-btn.active-press {
+  transform: scale(0.97) translateY(2px) !important;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25) !important;
+  background: linear-gradient(180deg, #059669 0%, #047857 100%) !important;
+}
+
+.swap-btn-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.swap-icon {
+  font-size: 20px;
+}
+
+.swap-label {
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.swap-meta {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.9;
 }
 
 .bar {
