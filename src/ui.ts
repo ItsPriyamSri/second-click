@@ -128,8 +128,16 @@ export function render(root: HTMLElement): void {
         .join(" ");
 
       let buttonContent = c.label;
-      if (c.id !== REAL_FIELD_ID) {
-        buttonContent = `<span class="anim-down-arrow">⬇</span> ${c.label} <span class="anim-sparkle">✨</span>`;
+      if (c.id === "dl-decoy-1") {
+        buttonContent = `<span class="anim-down-arrow">⬇</span> ${c.label}`;
+      } else if (c.id === "dl-decoy-3") {
+        buttonContent = `⚡ ${c.label}`;
+      } else if (c.id === "dl-decoy-4") {
+        buttonContent = `↓ ${c.label}`;
+      } else if (c.id === "dl-decoy-6") {
+        buttonContent = `⚠️ ${c.label}`;
+      } else if (c.id === "dl-decoy-7") {
+        buttonContent = `📱 ${c.label}`;
       }
 
       parts.push(
@@ -177,7 +185,7 @@ export function render(root: HTMLElement): void {
             <span>PASSED 54/54 ANTIVIRUS SCANS: Kaspersky Clean, Defender Clean, VirusTotal Passed</span>
           </div>
           <div style="margin-bottom:20px">
-            <button type="button" class="${cls}" data-click="${c.id}"><span class="anim-down-arrow">⬇</span> ${c.label}</button>
+            <button type="button" class="${cls}" data-click="${c.id}">${c.label}</button>
     `);
 
     if (s.revealedIds.includes(SWAP_ID)) {

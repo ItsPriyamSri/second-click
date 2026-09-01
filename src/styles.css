@@ -418,18 +418,6 @@ body {
   50% { transform: translateY(4px); }
 }
 
-.anim-sparkle {
-  display: inline-block;
-  animation: rotateSparkle 2s linear infinite;
-  margin-left: 6px;
-}
-
-@keyframes rotateSparkle {
-  0% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.2); }
-  100% { transform: rotate(360deg) scale(1); }
-}
-
 /* Decoys & Real Buttons Styling - Distinct Shapes & Animations */
 button[data-click], .file[data-click] {
   font: inherit;
