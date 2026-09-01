@@ -11,6 +11,8 @@ import { getState, setState } from "./store";
 import type { WallId } from "./state";
 import { getWebmcpStatus } from "./webmcp";
 
+let isVerifyingPerson = false;
+
 function closeWall(wall: WallId) {
   setState(dismissOneWall(getState(), wall));
 }
@@ -24,21 +26,21 @@ export function render(root: HTMLElement): void {
   parts.push(`
     <header class="site-header">
       <div class="header-top">
-        <a href="this-was-the-ad.html" class="brand-logo">
+        <a href="this-was-an-external-link.html" class="brand-logo">
           <span class="logo-badge">APK</span>
           <span class="brand-name">FILE<span>MIRROR</span></span>
         </a>
         <div class="fake-search">
           <input type="text" placeholder="Search 500,000+ APKs & drivers..." readonly value="DemoApp 1.2" title="Read-only search query" />
-          <button type="button" onclick="window.location.href='this-was-the-ad.html'">SEARCH</button>
+          <button type="button" onclick="window.location.href='this-was-an-external-link.html'">SEARCH</button>
         </div>
       </div>
       <nav class="site-nav">
-        <a href="this-was-the-ad.html" class="nav-item active">HOME</a>
-        <a href="this-was-the-ad.html" class="nav-item">ANDROID APKS</a>
-        <a href="this-was-the-ad.html" class="nav-item">WINDOWS DRIVERS</a>
-        <a href="this-was-the-ad.html" class="nav-item">MAC</a>
-        <a href="this-was-the-ad.html" class="nav-item">TOP 100</a>
+        <a href="this-was-an-external-link.html" class="nav-item active">HOME</a>
+        <a href="this-was-an-external-link.html" class="nav-item">ANDROID APKS</a>
+        <a href="this-was-an-external-link.html" class="nav-item">WINDOWS DRIVERS</a>
+        <a href="this-was-an-external-link.html" class="nav-item">MAC</a>
+        <a href="this-was-an-external-link.html" class="nav-item">TOP 100</a>
       </nav>
     </header>
   `);
@@ -71,20 +73,34 @@ export function render(root: HTMLElement): void {
 
     if (!s.walls.cookie && !s.walls.notify && !s.walls.signup) {
       if (!s.personGateDone) {
-        parts.push(`
-          <div class="captcha-container">
-            <div class="captcha-header">🛡️ Human Verification Required</div>
-            <div class="captcha-box">
-              <button type="button" class="captcha-btn ${s.personGateDone ? "done" : ""}" data-act="person">
-                <span class="captcha-check">${s.personGateDone ? "✓" : ""}</span>
-                <span>I am a person / not a robot</span>
-              </button>
+        if (isVerifyingPerson) {
+          parts.push(`
+            <div class="captcha-container">
+              <div class="captcha-header">🛡️ Human Verification Required</div>
+              <div class="captcha-box">
+                <button type="button" class="captcha-btn loading" disabled>
+                  <span class="captcha-check spinner">↻</span>
+                  <span>Verifying human...</span>
+                </button>
+              </div>
             </div>
-          </div>
-        `);
+          `);
+        } else {
+          parts.push(`
+            <div class="captcha-container">
+              <div class="captcha-header">🛡️ Human Verification Required</div>
+              <div class="captcha-box">
+                <button type="button" class="captcha-btn" data-act="person">
+                  <span class="captcha-check"></span>
+                  <span>I am a person / not a robot</span>
+                </button>
+              </div>
+            </div>
+          `);
+        }
       } else {
         parts.push(`
-          <button type="button" class="btn-continue-gate" data-act="enter-field">⚡ Continue to Mirror Downloads</button>
+          <button type="button" class="btn-continue-gate anim-fade-in" data-act="enter-field">⚡ Continue to Mirror Downloads</button>
         `);
       }
     }
@@ -231,26 +247,22 @@ export function render(root: HTMLElement): void {
     </div>
   `);
 
-  // Walls & Overlays
-  if (s.walls.cookie) {
+  // Sequential Walls & Overlays
+  if (s.walls.signup) {
     parts.push(`
-      <div class="wall" data-wall="cookie">
-        <div class="sheet sheet-cmp">
-          <h3 class="cmp-title">We value your privacy (CMP Consent v2.4)</h3>
-          <p class="cmp-desc">We and our 482 advertising partners store and access information on your device to personalize ads and analyze traffic. Click "Accept all" to consent.</p>
-          <div class="cmp-vendors-box">
-            <strong>Ad Vendors:</strong> AdTech Global, TrackingPlus, MediaData Inc, DataHarvest LLC, AdTargeting Network, AnalyticOps, WebInsight, MarketTracker, AdNet360...
+      <div class="wall" data-wall="signup">
+        <div class="sheet sheet-signup">
+          <h3>Create Free Account for Premium Speeds</h3>
+          <p>Unlock 100 MB/s download speeds and skip queue times.</p>
+          <div class="signup-social-btns">
+            <a href="this-was-the-ad.html" class="btn-social"><span>🔵</span> Continue with Facebook</a>
+            <a href="this-was-the-ad.html" class="btn-social"><span>🔴</span> Continue with Google</a>
           </div>
-          <div class="cmp-actions">
-            <button type="button" class="btn-accept-cmp" data-wall-close="cookie">Accept all</button>
-            <button type="button" class="btn-reject-cmp" data-wall-close="cookie">Reject non-essential cookies</button>
-          </div>
+          <button type="button" class="btn-skip-signup" data-wall-close="signup">Skip and use low speed mirror</button>
         </div>
       </div>
     `);
-  }
-
-  if (s.walls.notify) {
+  } else if (s.walls.notify) {
     parts.push(`
       <div class="wall wall-notify-container" data-wall="notify">
         <div class="sheet sheet-notify">
@@ -266,19 +278,19 @@ export function render(root: HTMLElement): void {
         </div>
       </div>
     `);
-  }
-
-  if (s.walls.signup) {
+  } else if (s.walls.cookie) {
     parts.push(`
-      <div class="wall" data-wall="signup">
-        <div class="sheet sheet-signup">
-          <h3>Create Free Account for Premium Speeds</h3>
-          <p>Unlock 100 MB/s download speeds and skip queue times.</p>
-          <div class="signup-social-btns">
-            <a href="this-was-the-ad.html" class="btn-social"><span>🔵</span> Continue with Facebook</a>
-            <a href="this-was-the-ad.html" class="btn-social"><span>🔴</span> Continue with Google</a>
+      <div class="wall" data-wall="cookie">
+        <div class="sheet sheet-cmp">
+          <h3 class="cmp-title">We value your privacy (CMP Consent v2.4)</h3>
+          <p class="cmp-desc">We and our 482 advertising partners store and access information on your device to personalize ads and analyze traffic. Click "Accept all" to consent.</p>
+          <div class="cmp-vendors-box">
+            <strong>Ad Vendors:</strong> AdTech Global, TrackingPlus, MediaData Inc, DataHarvest LLC, AdTargeting Network, AnalyticOps, WebInsight, MarketTracker, AdNet360...
           </div>
-          <button type="button" class="btn-skip-signup" data-wall-close="signup">Skip and use low speed mirror</button>
+          <div class="cmp-actions">
+            <button type="button" class="btn-accept-cmp" data-wall-close="cookie">Accept all</button>
+            <button type="button" class="btn-reject-cmp" data-wall-close="cookie">Reject non-essential cookies</button>
+          </div>
         </div>
       </div>
     `);
@@ -315,8 +327,15 @@ export function render(root: HTMLElement): void {
   });
 
   root.querySelector("[data-act=person]")?.addEventListener("click", () => {
-    setState(completePersonGate(getState()));
+    if (isVerifyingPerson || getState().personGateDone) return;
+    isVerifyingPerson = true;
+    render(root);
+    setTimeout(() => {
+      isVerifyingPerson = false;
+      setState(completePersonGate(getState()));
+    }, 1600);
   });
+
   root.querySelector("[data-act=enter-field]")?.addEventListener("click", () => {
     setState(enterField(getState()));
   });
