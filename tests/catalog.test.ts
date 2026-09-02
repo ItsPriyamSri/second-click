@@ -22,11 +22,10 @@ describe("getClickables", () => {
     expect(list[0].id).toBe(SWAP_ID);
     expect(list[0].kind).toBe("two_url");
     expect(list[0].shownUrl).toBe("/ads/click-here");
-    expect(list[0].secondUrl).toBe("/you-clicked-once.txt");
+    expect(list[0].secondUrl).toBe("/you-clicked-once.html");
     expect(list[0].hops).toEqual([
-      "/ads/hop-1",
-      "/ads/hop-2",
-      "/you-clicked-once.txt",
+      "/ads/click-here",
+      "/you-clicked-once.html",
     ]);
   });
 });

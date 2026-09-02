@@ -398,7 +398,7 @@ export function render(root: HTMLElement): void {
   });
   root.querySelector("[data-act=do-download]")?.addEventListener("click", () => {
     setState(cancelConfirm(getState()));
-    window.location.href = "you-clicked-once.txt";
+    window.location.href = "you-clicked-once.html";
   });
 
   root.querySelectorAll("[data-click]").forEach((el) => {

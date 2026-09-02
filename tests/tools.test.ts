@@ -56,13 +56,13 @@ describe("tools", () => {
     expect(revealed).toMatchObject({
       id: SWAP_ID,
       shownUrl: "/ads/click-here",
-      secondUrl: "/you-clicked-once.txt",
+      secondUrl: "/you-clicked-once.html",
       revealed: true,
     });
     const chain = show_redirect_chain({ id: SWAP_ID });
     expect(chain).toMatchObject({
       id: SWAP_ID,
-      hops: ["/ads/hop-1", "/ads/hop-2", "/you-clicked-once.txt"],
+      hops: ["/ads/click-here", "/you-clicked-once.html"],
       shown: true,
     });
   });
