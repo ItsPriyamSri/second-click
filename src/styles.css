@@ -690,6 +690,50 @@ button[data-click="dl-real"]:hover {
   }
 }
 
+.field-btn-wrapper {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.tool-tooltip {
+  position: absolute;
+  top: -10px;
+  right: 12px;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  z-index: 30;
+  animation: tooltipPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
+.decoy-tooltip {
+  background: #dc2626;
+  color: #ffffff;
+  border: 1px solid #ef4444;
+}
+
+.real-tooltip {
+  background: #16a34a;
+  color: #ffffff;
+  border: 1px solid #22c55e;
+}
+
+@keyframes tooltipPop {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 button {
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }

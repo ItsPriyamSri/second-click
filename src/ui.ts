@@ -160,13 +160,29 @@ export function render(root: HTMLElement): void {
         buttonContent = `📱 ${c.label}`;
       }
 
+      parts.push(`<div class="field-btn-wrapper">`);
+      if (s.explain) {
+        if (c.kind === "decoy") {
+          parts.push(`<span class="tool-tooltip decoy-tooltip">⚠️ AD DECOY</span>`);
+        } else if (c.kind === "real") {
+          parts.push(`<span class="tool-tooltip real-tooltip">✓ REAL FILE LINK</span>`);
+        }
+      }
+
       parts.push(
         `<button type="button" class="${cls}" data-click="${c.id}">${buttonContent}</button>`,
       );
 
       if (s.explain?.id === c.id) {
-        parts.push(`<p class="agent" data-speaker="agent">${s.explain.text}</p>`);
+        parts.push(`
+          <div class="agent-explain-card agent" data-speaker="agent">
+            <span class="explain-badge">💡 WEBMCP INSIGHT</span>
+            <span class="explain-text">${s.explain.text}</span>
+          </div>
+        `);
       }
+
+      parts.push(`</div>`);
     }
 
     parts.push(`
