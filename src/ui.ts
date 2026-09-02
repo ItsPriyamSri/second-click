@@ -161,12 +161,10 @@ export function render(root: HTMLElement): void {
       }
 
       parts.push(`<div class="field-btn-wrapper">`);
-      if (s.explain) {
-        if (c.kind === "decoy") {
-          parts.push(`<span class="tool-tooltip decoy-tooltip">⚠️ AD DECOY</span>`);
-        } else if (c.kind === "real") {
-          parts.push(`<span class="tool-tooltip real-tooltip">✓ REAL FILE LINK</span>`);
-        }
+      if (s.explain?.id === c.id) {
+        const tooltipCls = c.kind === "real" ? "tool-tooltip real-tooltip" : "tool-tooltip decoy-tooltip";
+        const icon = c.kind === "real" ? "✓ REAL LINK" : "⚠️ AD DECOY";
+        parts.push(`<span class="${tooltipCls}">${icon}</span>`);
       }
 
       parts.push(
